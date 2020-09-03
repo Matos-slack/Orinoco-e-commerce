@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./sass/main.scss:./css/style.css"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,9 @@
     "mongoose": "^5.3.8",
     "mongoose-unique-validator": "^2.0.2",
     "uuid": "^3.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matos-slack/Orinoco.git"
+  } 
 }
