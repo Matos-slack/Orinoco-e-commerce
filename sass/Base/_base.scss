@@ -1,0 +1,25 @@
+body{
+    font-family: 'RobotoMono', Arial, Helvetica, sans-serif;
+}
+
+.item-nav{
+    font-size: 25px;
+    background: linear-gradient(to top, rgba(22, 22, 22, 0.918) 4%, rgba(22, 22, 22, 0.918) 1%, transparent 6%) no-repeat;
+    text-decoration: none;
+    transition: background-size 500ms;
+    background-size: 0 100%;    
+}
+.item-nav:hover{
+    background-size: 100% 100%;
+}
+.marque {
+    font-size: 30px;
+}
+
+.card {
+    transition: all 500ms ease-out;
+}
+.card:hover{
+    transform: scale(1.08);
+}
+
