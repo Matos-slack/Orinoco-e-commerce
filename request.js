@@ -1,52 +1,6 @@
-// const { response } = require("express");
 
-// function get (url) {
-//     return new Promise((resolve, reject) => {
-//         var request = new XMLHttpRequest();
-//         request.onreadystatechange = function() {
-//             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-//                 var response = JSON.parse(this.responseText);
-//                 resolve(response);
-//             }
-//         };
-//         request.open("GET", url);
-//         request.send(); 
-//     }) 
-// } 
-
-// var data = get("http://localhost:3000/api/cameras").then((data) => {
-//     console.log(data);
-// });
-
-
-
-
-// //Création element Img
-// let imgOne = document.createElement("img");
-// //Pointage vers id cameraOne
-// let firstCamera = document.querySelector('#cameraOne');
-// //Ajout du noeud img enfant à cameraOne
-// firstCamera.appendChild(imgOne);
-// //Html du nouveau noeud en ajoutant une cible à img
-// firstCamera.innerHTML = '<img class = "first"> <div class = "card-body">';
-
-
-
-// //Pointage vers class first
-// let firstImg = document.querySelector(".first");
-// //Modification style nouveau noeud
-// firstImg.style.height = '300px';
-// //Ajout d'une class au nouveau noeud
-// firstImg.classList.add("my-3");
-
-
-// let name = document.createElement("div");
-// let nameCameraOne = document.querySelector('.card-body');
-// nameCameraOne.appendChild(name);
-// nameCameraOne.innerHTML = '<a href="produits.html" class="stretched-link"></a> <h5 class="card-title"></h5> <p class="card-text"></p>';
-
-
-
+let params = new URLSearchParams(document.location.search.substring(1));
+let id = params.get('id');
 
 //Récuperation donnée API
 fetch ("http://localhost:3000/api/cameras")
@@ -55,21 +9,20 @@ fetch ("http://localhost:3000/api/cameras")
             console.log('Problème requete. Code erreur : ' + response.statut);
             return;
         }
-        //Examine le txt de la réponse
         response.json().then(function (data) {
             for (let i = 0; i < data.length; i++) {       //Boucle pour parcourir les données
                 let mainContentImage = document.getElementById("camera"); 
                 let div = document.createElement("div");
-                div.innerHTML =`<div class="card col-12 col-md-4 mx-auto my-4 shadow border-0">
+                div.className = "col-4 my-4";
+                div.innerHTML =`<div class="card shadow border-0">
                                     <img src="${data[i].imageUrl}" alt="img" class="my-3" height="240px">
                                         <div class="card-body">
-                                            <a href="produits.html" class="stretched-link"></a>
                                             <h5 class="card-title">${data[i].name}</h5>
-                                            <p class="card-text">${data[i].description}</p>
+                                            <p class="card-text">${data[i].description}</p>        
+                                            <a href="produits.html?id=${data[i]._id}" class="btn btn-primary">Détails</a>                                                                                           
                                         </div>
-                                </div>
-                                `
-                mainContentImage.appendChild(div); 
+                                </div> `;       
+                mainContentImage.appendChild(div);
             }
         });
     })
@@ -77,5 +30,29 @@ fetch ("http://localhost:3000/api/cameras")
         console.log('Problème avec fonction fetch : ', error);
     });
 
+// function product(id) {
+//     document.location = 'produits.html?id=' + id;
+// }
 
-//Faire fonction qui parcours les _id de l'API et qui renvoi sur page produit le resultat au clic souris
+
+fetch("http://localhost:3000/api/cameras/"+id).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (json) {
+                document.querySelector("#name").textContent = json.name;
+                document.querySelector("#desc").textContent = json.description;
+                document.querySelector('.idImage').setAttribute('src', json.imageUrl);
+                document.querySelector('#price').textContent = json.price + ' €';
+                document.querySelector('.idImage').className = "my-5";
+                document.querySelector('p').className = "my-5";
+                
+                for (let i in json.lenses) {
+                    let details = document.querySelector('#lenses');
+                    let option = document.createElement("option");
+                    option.innerHTML = `<option id="${json.lenses[i]}" value="${json.lenses[i]}" name="${json.lenses[i]}">${json.lenses[i]}</option>`;
+                    details.appendChild(option);
+                }
+            })
+        }
+})
+
+    
