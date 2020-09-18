@@ -1,6 +1,9 @@
 
+
+// Produits //
+
 let params = new URLSearchParams(document.location.search.substring(1));
-let id = params.get('id');
+let id = params.get('id'); // variable renvoyant la valeur associé au parametre id.
 
 //Récuperation donnée API
 fetch ("http://localhost:3000/api/cameras")
@@ -10,7 +13,7 @@ fetch ("http://localhost:3000/api/cameras")
             return;
         }
         response.json().then(function (data) {
-            for (let i = 0; i < data.length; i++) {       //Boucle pour parcourir les données
+            for (let i = 0; i < data.length; i++) {       //Boucle pour parcourir les valeurs de retour
                 let mainContentImage = document.getElementById("camera"); 
                 let div = document.createElement("div");
                 div.className = "col-4 my-4";
@@ -30,11 +33,9 @@ fetch ("http://localhost:3000/api/cameras")
         console.log('Problème avec fonction fetch : ', error);
     });
 
-// function product(id) {
-//     document.location = 'produits.html?id=' + id;
-// }
 
 
+//Récupération id des produits API, pour envoyer infos sur page produits.html?id
 fetch("http://localhost:3000/api/cameras/"+id).then(function (response) {
         if (response.ok) {
             response.json().then(function (json) {
@@ -42,9 +43,10 @@ fetch("http://localhost:3000/api/cameras/"+id).then(function (response) {
                 document.querySelector("#desc").textContent = json.description;
                 document.querySelector('.idImage').setAttribute('src', json.imageUrl);
                 document.querySelector('#price').textContent = json.price + ' €';
-                document.querySelector('.idImage').className = "my-5";
-                document.querySelector('p').className = "my-5";
-                
+                document.querySelector('.idImage').className = "border border-secondary rounded my-5 productImage";
+                document.querySelector('p').className = "my-5 ml-5";
+
+                //Boucle pour tout les objectifs retournés en valeur, on a attribue la valeur des objectifs dans la balise option
                 for (let i in json.lenses) {
                     let details = document.querySelector('#lenses');
                     let option = document.createElement("option");
@@ -55,4 +57,36 @@ fetch("http://localhost:3000/api/cameras/"+id).then(function (response) {
         }
 })
 
+
+// Panier //
+
+let panier = document.querySelectorAll('#addPanier');
+
+for (let i = 0; i < panier.length; i++) {
+    panier[i].addEventListener('click', function() {                //Evenement au clic sur panier, on applique une fonction panierNumbers
+        panierNumbers();
+    })
+}
     
+function chargementPanierNumbers() {                                // Fonction pour garder productNumbers même en rafraichissant la page
+    let productNumbers = localStorage.getItem('panierNumbers');
+    if (productNumbers) {
+        document.querySelector('#compteurPanier').textContent = productNumbers;
+    }
+}
+
+
+function panierNumbers() {   
+    let productNumbers = localStorage.getItem('panierNumbers');     //Renvoi la valeur associé à la clé panierNumbers sur la variable productNumbers
+    productNumbers = parseInt(productNumbers);                      //Change le type de la valeur en nombre
+    
+    if(productNumbers) {                                            //Si il y a deja une valeur produit dans le localstorage, si productNumbers existe
+        localStorage.setItem('panierNumbers', productNumbers + 1);  // Ajoute + 1 à la valeur de la clé panierNumbers du localstorage
+        document.querySelector('#compteurPanier').textContent = productNumbers +1;  
+    } else {                                                        // Sinon
+        localStorage.setItem('panierNumbers', 1);                   // Definit la valeur de la clé du localstorage sur 1
+        document.querySelector('#compteurPanier').textContent = 1;
+    }
+}
+
+chargementPanierNumbers(); 

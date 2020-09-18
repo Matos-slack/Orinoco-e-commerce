@@ -27,7 +27,19 @@ body {
 }
 
 .card:hover {
-  transform: scale(1.03);
+  transform: scale(1.0155);
+}
+
+.contenu {
+  background-color: #f8f9fa;
+}
+
+.contenuProduit {
+  background-color: #e9ecef;
+}
+
+i {
+  font-size: large;
 }
 
 /*# sourceMappingURL=style.css.map */
