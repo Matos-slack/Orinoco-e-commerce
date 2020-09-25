@@ -7,7 +7,7 @@ let id = params.get('id'); // variable renvoyant la valeur associé au parametre
 let url = "http://localhost:3000/api/cameras";
 
 
-//Switch Urls
+//Switch Urls et appel fonction suivant l'url
 console.log(window.location.pathname)
 switch (window.location.pathname) {
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/index.html':
@@ -27,7 +27,19 @@ switch (window.location.pathname) {
         console.log('Panier')
         displayCart()
         break
+    case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/confirm.html':
+    case '/confirm.html':
+        let confirm = params.get('confirm')
+        console.log('Commande numéro : ' + confirm)
+        confirm ? confirms(confirm) : notfound()
+        break
+    case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/order.html':
+    case '/order.html':
+        let order = params.get("order");
+        console.log('Commande n° : ' + order)
+        order ? orders(order) : notfound()
 }
+
 
 
 
@@ -38,21 +50,21 @@ function listing (url) {
                 console.log('Problème requete. Code erreur : ' + response.statut);
                 return;
             }
-            response.json().then(function (data) {
-                for (let i = 0; i < data.length; i++) {       //Boucle pour parcourir les valeurs de retour
-                    let mainContentImage = document.getElementById("camera"); 
-                    let div = document.createElement("div");
-                    div.className = "col-4 my-4";
-                    div.innerHTML =`<div class="card shadow border-0">
-                                        <img src="${data[i].imageUrl}" alt="img" class="my-3" height="240px">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${data[i].name}</h5>
-                                                <p class="card-text">${data[i].description}</p>        
-                                                <a href="produits.html?id=${data[i]._id}" class="btn btn-primary">Détails</a>                                                                                           
-                                            </div>
-                                    </div> `;       
-                    mainContentImage.appendChild(div);
-                }
+                response.json().then(function (data) {
+                    for (let i = 0; i < data.length; i++) {       //Boucle pour parcourir les valeurs de retour
+                        let mainContentImage = document.getElementById("camera"); 
+                        let div = document.createElement("div");
+                        div.className = "col-md-4 my-4";
+                        div.innerHTML =`<div class="card shadow border-0">
+                                            <img src="${data[i].imageUrl}" alt="img" class="my-3" height="240px">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${data[i].name}</h5>
+                                                    <p class="card-text">${data[i].description}</p>        
+                                                    <a href="produits.html?id=${data[i]._id}" class="btn btn-primary">Détails</a>                                                                                           
+                                                </div>
+                                        </div> `;       
+                        mainContentImage.appendChild(div);
+                    }
             });
         })
         .catch(function (error) {
@@ -60,6 +72,9 @@ function listing (url) {
     });
 }
 
+function product(id) {
+    document.location = 'products.html?id=' + id;
+}
 
 
 //Récupération id des produits API, pour envoyer infos sur page produits.html?id
@@ -69,10 +84,12 @@ function prod (id) {
                 response.json().then(function (json) {
                     document.querySelector("#name").textContent = json.name;
                     document.querySelector("#desc").textContent = json.description;
+                    document.querySelector('img').setAttribute('src', json.imageUrl);
                     document.querySelector('.idImage').setAttribute('src', json.imageUrl);
-                    document.querySelector('#price').textContent = json.price + ' €';
-                    document.querySelector('.idImage').className = "border border-secondary rounded my-5 productImage";
-                    document.querySelector('p').className = "my-5 ml-5";
+                    document.querySelector('#price').textContent = json.price / 100 + ' €';
+                    document.querySelector('#price').className = "font-weight-bold my-5 ml-5";
+                    document.querySelector('.idImage').className = "img-fluid border border-secondary rounded my-5 productImage";
+                    document.querySelector('p').className = "my-5 ml-5 h3";
                     document.querySelector('.add').setAttribute('id', json._id);
                 
                     //Boucle pour tout les objectifs retournés en valeur, on a attribue la valeur des objectifs dans la balise option
@@ -90,36 +107,18 @@ function prod (id) {
 
 // Panier //
 
-// let products = [
-//    {
-//     name : 'Zurss 50',
-//     id : "5be1ed3f1c9d44000030b061",
-//     lenses : "35mm 1.4",
-//     imageUrl : "http://localhost:3000/images/vcam_1.jpg",
-//     price : 49900,
-//     inCart : 0
-//    },
-//    {
-//     name : 'Hirch 400DTS',
-//     id : "5be1ef211c9d44000030b062",
-//     lenses : "50mm 1.8",
-//     imageUrl : "http://localhost:3000/images/vcam_2.jpg",
-//     price : 30900,
-//     inCart : 0
-//    }
-// ]
 
-let panier = document.querySelectorAll('.add');
+let panier = document.querySelectorAll('.add');                     //Selection bouton ajoutez au panier
 
 for (let i = 0; i < panier.length; i++) {
-    panier[i].addEventListener('click', function(e) {                //Evenement au clic sur panier, on applique une fonction panierNumbers qui determine le produit cliqué
+    panier[i].addEventListener('click', function(e) {                //Evenement au clic sur bouton panier
         e.preventDefault();
-        cartNum();
-        cartItems();
+        cartNum();                                                  // Appel fonction pour nbr article
+        cartItems();                                                // Appel fonction pour ajouter un item au panier
     })
 }
     
-function chargementPanierNumbers() {                                // Fonction pour garder productNumbers même en rafraichissant la page
+function chargementPanierNumbers() {                                // Fonction pour garder cartNum même en rafraichissant la page
     let cartNumbers = localStorage.getItem('cartNumbers');
     if (cartNumbers) {
         document.querySelector('#compteurPanier').textContent = cartNumbers;
@@ -129,111 +128,66 @@ function chargementPanierNumbers() {                                // Fonction 
 }
 
 
-// function panierNumbers(product) {  
-//     let productNumbers = localStorage.getItem('panierNumbers');     //Renvoi la valeur associé à la clé panierNumbers sur la variable productNumbers
-//     productNumbers = parseInt(productNumbers);                      //Change le type de la valeur en nombre
-    
-//     if(productNumbers) {                                            //Si il y a deja une valeur produit dans le localstorage, si productNumbers existe
-//         localStorage.setItem('panierNumbers', productNumbers + 1);  // Ajoute + 1 à la valeur de la clé panierNumbers du localstorage
-//         document.querySelector('#compteurPanier').textContent = productNumbers +1;  
-//     } else {                                                        // Sinon
-//         localStorage.setItem('panierNumbers', 1);                   // Definit la valeur de la clé du localstorage sur 1
-//         document.querySelector('#compteurPanier').textContent = 1;
-//     }
-//     setItems(product);
-// }
 
-// function setItems(product) {                                       // Fonction ajout Item au panier
-//     let panierItems = localStorage.getItem('productsInCart');
-//     panierItems = JSON.parse(panierItems);
-
-//     if (panierItems != null) {
-
-//         if(panierItems[product.id] == undefined) {
-//             panierItems = {
-//                 ...panierItems,
-//                 [product.id]: product
-//             }
-//         }
-//         panierItems[product.id].inCart += 1;
-//     } else {
-//         product.inCart = 1;
-//         panierItems = {
-//             [product.id]: product
-//         }
-//     }
-
-//     localStorage.setItem("productsInCart", JSON.stringify(panierItems));
-// }
-
+// Fonction nombre item dans le panier
 function cartNum() {
-    let num = parseInt(localStorage.getItem('cartNumbers'))
+    let num = parseInt(localStorage.getItem('cartNumbers'));
     if (num) {
-        localStorage.setItem('cartNumbers', num + 1)
+        localStorage.setItem('cartNumbers', num + 1);
         document.querySelector('#compteurPanier').textContent = num + 1;
     } else {
-        localStorage.setItem('cartNumbers', 1)
+        localStorage.setItem('cartNumbers', 1);
         document.querySelector('#compteurPanier').textContent = 1;
     }
 }
 
 
+// Fonction ajout item dans localstorage et panier en fonction de son id
 
 function cartItems() {
-    // 1) Verifier s'il y a déjà des items dans le panier
-    // 2) Récuperer les items dans un tableau
-    // 3) Ajouter le nouvel item au tableau
-    // 4) Ajouter le nouveau tableau dans le localstorage
-    if (localStorage.getItem('itemsInCart') != null) {
+    if (localStorage.getItem('itemsInCart') != null) {                     // 1) Si item dans panier sont # de null
 
-        let inCart = JSON.parse(localStorage.getItem('itemsInCart'))
+        let inCart = JSON.parse(localStorage.getItem('itemsInCart')) ;     // 2) Récuperer les items dans un tableau
 
-        let product = updateproduct()
-        total()
+        let product = updateproduct();
+        total();
+        console.log(product);
 
-        let ids = Object.keys(inCart)
-        if (ids.indexOf(product[0].id) != -1) { //si l'id est déjà dans le panier
-            let i = ids.indexOf(product[0].id)
-            let curid = ids[i]
-
-            // let info = existcolor(inCart, curid, product[0].color)
-            let info = 0
-
-
-            if (info === false) {
-                console.log('la couleur : ' + product[0].color + " n'est pas dans le panier")
+        let ids = Object.keys(inCart)                                      //retourne un tableau des noms de proprietes de l'objet inCart
+            if (ids.indexOf(product[0].id) != -1) {                        //si l'id est déjà dans le panier 
+                let i = ids.indexOf(product[0].id);
+                let curid = ids[i];
+                let info = 0;
+                inCart[curid][info].incart += 1;
                 localStorage.setItem('itemsInCart', JSON.stringify(inCart))
+                // console.log([i]);                                        // 3) Ajouter le nouvel item au tableau product
             } else {
-                console.log('la couleur : ' + inCart[curid][info].color + ' est déjà dans le panier')
-                inCart[curid][info].incart += 1
-                localStorage.setItem('itemsInCart', JSON.stringify(inCart))
+                localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product, inCart)));    // Ajouter au localstorage
             }
-        } else {
-            localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product, inCart)))
-        }
 
     } else {
-        let product = updateproduct()
-        total()
-        localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product)))
-    }
-
+        let product = updateproduct();
+            total();
+            localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product))) ;   // 4) Ajouter le nouveau tableau dans le localstorage
+        }
 }
 
-
+//Fonction mise a jour du produit
 function updateproduct() {
     let product = [{
         name: $("#name").text(),
         desc: $("#desc").text(),
-        img: $(".idImage").attr('src'),
+        img: $("img").attr('src'),
         price: parseInt($("#price").text()),
         id: $(".add").attr('id'),
         incart: 1
     }]
-    return product
+
+    return product;
+    
 }
 
-
+//Fonction ajout d'un produit
 function additem(id, product, json) {
     if (json != null) {
         if (json[id] === undefined) {
@@ -247,66 +201,82 @@ function additem(id, product, json) {
             [id]: product
         }
     }
-    return item
+    return item;
 }
 
 
+//Fonction pour supprimer item panier
 function deleteitem(id) {
-    let json = JSON.parse(localStorage.getItem('itemsInCart'))
+    let json = JSON.parse(localStorage.getItem('itemsInCart'));
     if (json != null) {
         if (json[id] != undefined) {
             const itemcount = new Promise((resolve, reject) => {
-                resolve(json[id][0].incart)
-            }).then((items) => {
-                let num = parseInt(localStorage.getItem('cartNumbers'))
-                num = num - items
-                localStorage.setItem('cartNumbers', num)
-                let price = json[id][0].price * json[id][0].incart
-                price = parseInt(localStorage.getItem('totalCost')) - price
-                localStorage.setItem('totalCost', price)
-                delete json[id]
-                localStorage.setItem('itemsInCart', JSON.stringify(json))
+                resolve(json[id][0].incart);
+            })
+            .then((items) => {
+                let num = parseInt(localStorage.getItem('cartNumbers'));
+                num = num - items;
+
+                localStorage.setItem('cartNumbers', num);
+                let price = json[id][0].price * json[id][0].incart;
+                price = parseInt(localStorage.getItem('totalCost')) - price;
+
+                localStorage.setItem('totalCost', price);
+                delete json[id];
+                localStorage.setItem('itemsInCart', JSON.stringify(json));
             })
         }
-        window.location.reload()
+        window.location.reload();
     }
 }
 
-
+//Fonction pour faire total item dans panier
 function total() {
-    let product = updateproduct()
-    let cartCost = localStorage.getItem('totalCost')
+    let product = updateproduct();
+    let cartCost = localStorage.getItem('totalCost');
     if (cartCost != null) {
-        cartCost = parseInt(cartCost)
-        localStorage.setItem('totalCost', cartCost + product[0].price)
+        cartCost = parseInt(cartCost);
+        localStorage.setItem('totalCost', cartCost + product[0].price);
     } else {
-        localStorage.setItem('totalCost', product[0].price)
+        localStorage.setItem('totalCost', product[0].price);
     }
 }
 
+
+//Fonction afficher panier 
 function displayCart() {
-    let cartITems = localStorage.getItem('itemsInCart')
-    cartITems = JSON.parse(cartITems)
-    let productsInCart = document.querySelector('.cart.additem')
-    document.querySelector('#total').textContent = `Total : ${localStorage.getItem('totalCost')} €`
+    let cartITems = localStorage.getItem('itemsInCart');
+    cartITems = JSON.parse(cartITems);
+
+    let productsInCart = document.querySelector('.cart.additem');
+    document.querySelector('#total').textContent = `Total : ${localStorage.getItem('totalCost')}€`;
+    console.log(cartITems); // Verification produit présent dans le panier
+
     if (cartITems && productsInCart) {
-        productsInCart.innerHTML = ''
+        productsInCart.innerHTML = '';
+
         Object.values(cartITems).map(item => {
             productsInCart.innerHTML += `
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-2 text-center">
-                        <img class="img-responsive" src ="${item[0].img}" alt="prewiew" width="100%">
+                        <img class="img-responsive" src="${item[0].img}" alt="preview appareil" width="100%">
                     </div>
-                    <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+
+                    <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6 ml-4">
                         <h4 class="product-name font-weight-bold my-1">${item[0].name}</h4>
                         <p>${item[0].desc}</p>
                     </div>
+
                     <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-                        <div class="col-3 col-sm-3 col-md-6 text-md-right">
-                            <h6>${item[0].price} <span class="text-muted"> € </span></h6>
+                        <div class="col-4 col-sm-3 col-md-6 text-md-right">
+                            <h6 class="font-weight-bold mt-2">${item[0].price}<span class="text-muted">€</span></h6>
                         </div>
-                        
-                        <div class = "col-2 col-sm-2 col-md-2 text-right">
+                        <div class="col-4 col-sm-4 col-md-4 mt-1 text-center">
+                            <div class ="quantity">
+                                <input id="${item[0].id}" class="itemcount" type = "number" step="1" max="99" min="1" value="${item[0].incart}" title="Qty" class="qty" size = "4" >
+                            </div>
+                        </div>
+                        <div class = "col-4 col-sm-2 col-md-2 text-right">
                             <button id="${item[0].id}" onclick="deleteitem(this.id)" type="button" class="btn btn-outline-danger btn-xs">
                             <i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
@@ -316,5 +286,88 @@ function displayCart() {
                 `
         })
     }
+
+    //Gestion quantité produit
+    let inputs = document.querySelectorAll('.itemcount');
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("change", (e) => {
+                //console.log(e) test
+            let id = inputs[i].getAttribute('id');
+            cartITems[id][0].incart = parseInt(inputs[i].value);
+            localStorage.setItem('itemsInCart', JSON.stringify(cartITems));
+            console.log(inputs[i].value);
+
+            if (parseInt(e.target.defaultValue) > parseInt(inputs[i].value)) {
+                console.log('-1');
+                /*Prendre le nombre de camera le soustraire au total d'objets dans le panier puis ajouter le nombre modifier.*/
+                /*Prendre le prix du produit et le soustraire au total */
+
+                let price = localStorage.getItem('totalCost') - cartITems[id][0].price;
+                localStorage.setItem('totalCost', price);
+                let itemstotal = parseInt(localStorage.getItem('cartNumbers'))
+                let numCamera = parseInt(e.target.defaultValue)
+                let cameraModifier = cartITems[id][0].incart
+                if (itemstotal > numCamera) {
+                    itemstotal = itemstotal - numCamera
+                    itemstotal = itemstotal + cameraModifier
+                    localStorage.setItem('cartNumbers', itemstotal)
+                } else if (itemstotal === numCamera) {
+                    console.log("c'est le même nombre")
+                    itemstotal = cameraModifier
+                    localStorage.setItem('cartNumbers', itemstotal)
+                }
+            } else if (parseInt(e.target.defaultValue) < parseInt(inputs[i].value)) {
+                console.log('+1')
+
+                /*Prendre le nombre de camera l'ajouter au total d'objets dans le panier puis ajouter le nombre modifier.*/
+                /*Prendre le prix du produit et l'additionner au total */
+
+                let price = parseInt(localStorage.getItem('totalCost')) + parseInt(cartITems[id][0].price)
+                localStorage.setItem('totalCost', price)
+                let itemstotal = parseInt(localStorage.getItem('cartNumbers'))
+                let numCamera = parseInt(e.target.defaultValue)
+                let cameraModifier = cartITems[id][0].incart
+                if (itemstotal > numCamera) {
+                    itemstotal = itemstotal + numCamera
+                    itemstotal = itemstotal + cameraModifier
+                    localStorage.setItem('cartNumbers', itemstotal)
+                } else if (itemstotal === numCamera) {
+                    console.log("c'est le même nombre")
+                    itemstotal = cameraModifier
+                    localStorage.setItem('cartNumbers', itemstotal)
+                }
+            }
+            window.location.reload()
+        });
+    }
 }
+
+
+
+
+//Fonction confirmation commande prenant id comme parametre
+
+function ValidCart(inputs) {
+    let options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+    fetch("http://localhost:3000/api/cameras/order", options)
+        .then((response) => { response.json()
+        .then((data) => {
+            console.log(data);
+            localStorage.setItem('order', JSON.stringify(data));
+            document.location = 'order.html?order=' + data.orderId;
+        }
+        )}
+)}
+
+//test requete POST
+
+
+
 chargementPanierNumbers(); 

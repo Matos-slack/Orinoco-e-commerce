@@ -20,7 +20,7 @@ body{
     transition: all 500ms ease-out;
 }
 .card:hover{
-    transform: scale(1.0155);   
+    transform: scale(1.0155);
 }
 .contenu {
     background-color: #f8f9fa;
@@ -30,4 +30,7 @@ body{
 }
 i {
     font-size: large;
+}
+.font-color {
+    background-color: #E9ECEF;
 }

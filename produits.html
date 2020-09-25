@@ -20,8 +20,9 @@
                     <div class="container">
                         <div class="row">
                             <nav class="col navbar navbar-expand-lg navbar-light">
-                                <a class="navbar-brand" href="index.html">
-                                    <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">Orinoco</span>
+
+                                <a class="navbar-brand navbar-collapse" href="index.html">
+                                    <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">Shop App</span>
                                 </a>
                                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                                         <span class="navbar-toggler-icon"></span>
@@ -29,16 +30,16 @@
                                     <div id="navbarContent" class="collapse navbar-collapse">
                                         <ul class="navbar-nav mx-auto">
                                             <li class="nav-item active">
-                                                <a class="nav-link" href="index.html"><span class="item-nav">Accueil</span></a>
+                                                <a class="nav-link mx-3" href="index.html"><span class="item-nav">Accueil</span></a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#nosProduit"><span class="item-nav">Produits</span></a>
+                                                <a class="nav-link mx-3" href="#nosProduit"><span class="item-nav">Produits</span></a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#"><span class="item-nav">Blog</span></a>
+                                                <a class="nav-link mx-3" href="#"><span class="item-nav">Blog</span></a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#"><span class="item-nav">Album Photo</span></a>
+                                                <a class="nav-link mx-3" href="#"><span class="item-nav">Albums</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -56,19 +57,21 @@
             <main class="container">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <img class="idImage" src="" alt="" height="320px">
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <p class="ml-5" id="name"></p>
                         <p class="ml-5" id="price"></p>
                         <p class="ml-5" id="desc"></p>
-                        
-                        <select class="ml-5" name="" id="lenses"> 
+
+                        <label for="obj" class="ml-5 font-weight-bold">Choisir un objectif</label>
+                        <select class="ml-5" name="obj" id="lenses" required>
+                            
                         </select>
 
-                        <button class="btn btn-secondary ml-5 add" onclick="this.disabled=true">Ajoutez au Panier</a>
+                        <button class="btn btn-secondary ml-5 add">Ajoutez au Panier</a>
                         
                     </div>
                 </div>

@@ -18,8 +18,9 @@
                 <div class="container">
                     <div class="row">
                         <nav class="col navbar navbar-expand-lg navbar-light">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">Orinoco</span>
+
+                            <a class="navbar-brand navbar-collapse" href="index.html">
+                                <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">Shop App</span>
                             </a>
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                                     <span class="navbar-toggler-icon"></span>
@@ -27,16 +28,16 @@
                                 <div id="navbarContent" class="collapse navbar-collapse">
                                     <ul class="navbar-nav mx-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="index.html"><span class="item-nav">Accueil</span></a>
+                                            <a class="nav-link mx-2" href="index.html"><span class="item-nav">Accueil</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#nosProduit"><span class="item-nav">Produits</span></a>
+                                            <a class="nav-link mx-2" href="#nosProduit"><span class="item-nav">Produits</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#"><span class="item-nav">Blog</span></a>
+                                            <a class="nav-link mx-2" href="#"><span class="item-nav">Blog</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#"><span class="item-nav">Album Photo</span></a>
+                                            <a class="nav-link mx-2" href="#"><span class="item-nav">Albums</span></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -51,15 +52,59 @@
         </header>
 
         <!--Contenu page-->
-
+       
         <main class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="jumbotron">
+                        <h3 class="col-12 text-center" >Mon panier</h3>
+                    </div>   
+                </div>
+            </div>
 
-            <div class="card-body cart additem">
-            </div>
-            <div class="pull-right mr-2">
-                <p id="total"></p>
-            </div>
+            <div class="card-body cart additem"></div>
+            
         </main>
+
+
+    <div class="container font-color">
+
+        <div class="col-md-12">
+            <form class="">
+                <p class="lead text-center font-weight-bold">Informations nécéssaire pour confirmer la commande</p>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="lastname" class="font-weight-bold">Votre Nom</label>
+                        <input id="lastname" type="text" name="lastname" class="form-control mb-2" placeholder="Durand" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name" class="font-weight-bold">Votre Prenom</label>
+                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name" class="font-weight-bold">Votre Adresse</label>
+                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name" class="font-weight-bold">Votre Ville</label>
+                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name" class="font-weight-bold">Votre mail</label>
+                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12 mt-4 mb-4">
+            <div class="text-center">
+                <p id="total" class="h3 font-weight-bold"></p>
+                <button type="submit" class="btn btn-secondary mb-3 mt-2">Commander</button>
+            </div>
+        </div>
+
+    </div>    
 
 
 
