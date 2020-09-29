@@ -1,50 +1,58 @@
 
 
 // Produits //
-
+let panier = document.querySelectorAll('.add');       //Selection bouton ajoutez au panier
+// document.querySelector('.cart').textContent = localStorage.getItem('cartNumbers');
 let params = new URLSearchParams(document.location.search.substring(1));
-let id = params.get('id'); // variable renvoyant la valeur associé au parametre id.
 let url = "http://localhost:3000/api/cameras";
+let item ={};
 
 
 //Switch Urls et appel fonction suivant l'url
-console.log(window.location.pathname)
+console.log(window.location.pathname);
+
 switch (window.location.pathname) {
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/index.html':
     case '/JWDP5/':
     case '/index.html':
-        console.log('Acceuil')
-        listing(url)
+        console.log('Acceuil');
+        list(url);
         break
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/produits.html':
     case '/produits.html':
         let id = params.get("id");
-        console.log('Produit, id : ' + id)
-        id ? prod(id) : notfound()
+        console.log('Produit, id : ' + id);
+        id ? produit(id) : notfound();
         break
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/panier.html':
     case '/panier.html':
-        console.log('Panier')
-        displayCart()
-        break
-    case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/confirm.html':
-    case '/confirm.html':
-        let confirm = params.get('confirm')
-        console.log('Commande numéro : ' + confirm)
-        confirm ? confirms(confirm) : notfound()
+        console.log('Panier');
+        afficherPanier();
+        document.querySelector('.buy').addEventListener('click', e => {
+            let inputs = document.querySelectorAll('input.form-control')
+            ValidForm(inputs)
+        })
         break
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/order.html':
     case '/order.html':
         let order = params.get("order");
-        console.log('Commande n° : ' + order)
-        order ? orders(order) : notfound()
+        console.log('Commande n° : ' + order);
+        order ? orders(order) : notfound();
+}
+
+
+for (let i = 0; i < panier.length; i++) {
+    panier[i].addEventListener('click', function(e) {                //Evenement au clic sur bouton panier
+        e.preventDefault();
+        cartNum();                                                  // Appel fonction pour nbr article
+        itemPanier();                                                // Appel fonction pour ajouter un item au panier
+    })
 }
 
 
 
-
 //Récuperation donnée API
-function listing (url) {
+function list(url) {
     fetch (url).then (function (response) {
             if (response.status !== 200) {
                 console.log('Problème requete. Code erreur : ' + response.statut);
@@ -72,13 +80,14 @@ function listing (url) {
     });
 }
 
+
 function product(id) {
     document.location = 'products.html?id=' + id;
 }
 
 
 //Récupération id des produits API, pour envoyer infos sur page produits.html?id
-function prod (id) {
+function produit(id) {
     fetch(url + '/' + id).then(function (response) {
             if (response.ok) {
                 response.json().then(function (json) {
@@ -105,19 +114,93 @@ function prod (id) {
 }
 
 
-// Panier //
 
+function ValidForm(inputs) {
+    let data = {}
+    // let valid = 0
+    // let reg = {
+    //     "mail": /([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i, // Adresse Mail
+    //     "text": /^\S[a-z ,.'à-ÿ-]+$/i, // Nom, Prénom, Ville
+    //     "postal": /^[0-9]{1,5}[A-z0-9 'à-ÿ-]{5,30}$/i // Adresse postale
+    // }
+    // for (let i = 0; i < inputs.length; i++) {
+    //     if (inputs[i].name == "name" || inputs[i].name == "lastname" || inputs[i].name == "city") {
+    //         validClass(reg.text.test(inputs[i].value), inputs[i]);
+    //     } else if (inputs[i].name == "email") {
+    //         validClass(reg.mail.test(inputs[i].value), inputs[i]);
+    //     } else if (inputs[i].name == "adress") {
+    //         validClass(reg.postal.test(inputs[i].value), inputs[i]);
+    //     }
+    //     if (inputs[i].classList[1] == 'is-valid') {
+    //         valid = i
+    //     }
+        // if (valid == 4) {
+            // document.querySelector('form').submit()
+            let pducts = JSON.parse(localStorage.getItem('itemsInCart'));
+            data = {
+                'contact': {
+                    'firstName': inputs[0].value,
+                    'lastName': inputs[1].value,
+                    'address': inputs[3].value,
+                    'city': inputs[4].value,
+                    'email': inputs[2].value
+                },
+                'products': [
 
-let panier = document.querySelectorAll('.add');                     //Selection bouton ajoutez au panier
+                ]
+            }
+            Object.keys(pducts).map(pdt => {
+                for (let i = 0; i < pducts[pdt].length; i++) {
+                    const e = pducts[pdt][i];
+                    if (e.incart >= 1) {
+                        for (let x = 0; x < e.incart; x++) {
+                            console.log(e);
+                            data.products.push(e.id);
+                        }
+                    } else {
+                        data.products.push(e.id);
+                    }
+                }
+            })
+            console.log(data);  // TEST
+            // Ici le post et localstorage
+            let posturl = "http://localhost:3000/api/cameras/order";
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+            fetch(posturl, options).then((response) => {
 
-for (let i = 0; i < panier.length; i++) {
-    panier[i].addEventListener('click', function(e) {                //Evenement au clic sur bouton panier
-        e.preventDefault();
-        cartNum();                                                  // Appel fonction pour nbr article
-        cartItems();                                                // Appel fonction pour ajouter un item au panier
-    })
-}
+                response.json().then((data) => {
+                    console.log(data);
+                    localStorage.setItem('order', JSON.stringify(data));
+                    localStorage.removeItem('cartNumbers');
+                    localStorage.removeItem('totalCost');
+                    localStorage.removeItem('itemsInCart');
+                    document.location = 'order.html?order=' + data.orderId;
+                });
+            })
+        }
     
+
+    
+
+// Fonction ajout ou suppression validation formulaire
+function validClass(Regtest, input) {
+    if (Regtest) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+    } else {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+    }
+}
+
+
+
 function chargementPanierNumbers() {                                // Fonction pour garder cartNum même en rafraichissant la page
     let cartNumbers = localStorage.getItem('cartNumbers');
     if (cartNumbers) {
@@ -144,7 +227,7 @@ function cartNum() {
 
 // Fonction ajout item dans localstorage et panier en fonction de son id
 
-function cartItems() {
+function itemPanier() {
     if (localStorage.getItem('itemsInCart') != null) {                     // 1) Si item dans panier sont # de null
 
         let inCart = JSON.parse(localStorage.getItem('itemsInCart')) ;     // 2) Récuperer les items dans un tableau
@@ -153,26 +236,26 @@ function cartItems() {
         total();
         console.log(product);
 
-        let ids = Object.keys(inCart)                                      //retourne un tableau des noms de proprietes de l'objet inCart
-            if (ids.indexOf(product[0].id) != -1) {                        //si l'id est déjà dans le panier 
+        let ids = Object.keys(inCart);                                      // Retourne un tableau des noms de proprietes de l'objet inCart
+            if (ids.indexOf(product[0].id) != -1) {                        // Si l'id est déjà dans le panier 
                 let i = ids.indexOf(product[0].id);
                 let curid = ids[i];
                 let info = 0;
                 inCart[curid][info].incart += 1;
-                localStorage.setItem('itemsInCart', JSON.stringify(inCart))
-                // console.log([i]);                                        // 3) Ajouter le nouvel item au tableau product
+                localStorage.setItem('itemsInCart', JSON.stringify(inCart));        // 3) Ajouter le nouvel item au tableau product
+                // console.log([i]);  TEST                                      
             } else {
-                localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product, inCart)));    // Ajouter au localstorage
+                localStorage.setItem('itemsInCart', JSON.stringify(addItem(product[0].id, product, inCart)));    // Ajouter au localstorage
             }
 
     } else {
         let product = updateproduct();
             total();
-            localStorage.setItem('itemsInCart', JSON.stringify(additem(product[0].id, product))) ;   // 4) Ajouter le nouveau tableau dans le localstorage
+            localStorage.setItem('itemsInCart', JSON.stringify(addItem(product[0].id, product))) ;   // 4) Ajouter le nouveau tableau dans le localstorage
         }
 }
 
-//Fonction mise a jour du produit
+//Fonction renvoi des éléments de proprieté des produits
 function updateproduct() {
     let product = [{
         name: $("#name").text(),
@@ -188,7 +271,7 @@ function updateproduct() {
 }
 
 //Fonction ajout d'un produit
-function additem(id, product, json) {
+function addItem(id, product, json) {
     if (json != null) {
         if (json[id] === undefined) {
             item = {
@@ -206,7 +289,7 @@ function additem(id, product, json) {
 
 
 //Fonction pour supprimer item panier
-function deleteitem(id) {
+function deleteItem(id) {
     let json = JSON.parse(localStorage.getItem('itemsInCart'));
     if (json != null) {
         if (json[id] != undefined) {
@@ -244,13 +327,13 @@ function total() {
 
 
 //Fonction afficher panier 
-function displayCart() {
+function afficherPanier() {
     let cartITems = localStorage.getItem('itemsInCart');
     cartITems = JSON.parse(cartITems);
 
     let productsInCart = document.querySelector('.cart.additem');
     document.querySelector('#total').textContent = `Total : ${localStorage.getItem('totalCost')}€`;
-    console.log(cartITems); // Verification produit présent dans le panier
+    console.log(cartITems); // Verification produit présent dans le panier TEST
 
     if (cartITems && productsInCart) {
         productsInCart.innerHTML = '';
@@ -277,7 +360,7 @@ function displayCart() {
                             </div>
                         </div>
                         <div class = "col-4 col-sm-2 col-md-2 text-right">
-                            <button id="${item[0].id}" onclick="deleteitem(this.id)" type="button" class="btn btn-outline-danger btn-xs">
+                            <button id="${item[0].id}" onclick="deleteItem(this.id)" type="button" class="btn btn-outline-danger btn-xs">
                             <i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -292,82 +375,87 @@ function displayCart() {
 
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("change", (e) => {
-                //console.log(e) test
+                //console.log(e) TEST
             let id = inputs[i].getAttribute('id');
             cartITems[id][0].incart = parseInt(inputs[i].value);
             localStorage.setItem('itemsInCart', JSON.stringify(cartITems));
-            console.log(inputs[i].value);
 
             if (parseInt(e.target.defaultValue) > parseInt(inputs[i].value)) {
-                console.log('-1');
-                /*Prendre le nombre de camera le soustraire au total d'objets dans le panier puis ajouter le nombre modifier.*/
-                /*Prendre le prix du produit et le soustraire au total */
+                console.log('-1'); // TEST
+                // Soustraire le nombre de camera au total d'objets dans le panier puis ajouter le nombre modifié.
+                // Soustraire le prix du produit au total du panier
 
                 let price = localStorage.getItem('totalCost') - cartITems[id][0].price;
                 localStorage.setItem('totalCost', price);
-                let itemstotal = parseInt(localStorage.getItem('cartNumbers'))
-                let numCamera = parseInt(e.target.defaultValue)
-                let cameraModifier = cartITems[id][0].incart
+                let itemstotal = parseInt(localStorage.getItem('cartNumbers'));
+                let numCamera = parseInt(e.target.defaultValue);
+                let cameraModifier = cartITems[id][0].incart;
+
                 if (itemstotal > numCamera) {
-                    itemstotal = itemstotal - numCamera
-                    itemstotal = itemstotal + cameraModifier
-                    localStorage.setItem('cartNumbers', itemstotal)
+                    itemstotal = itemstotal - numCamera;
+                    itemstotal = itemstotal + cameraModifier;
+                    localStorage.setItem('cartNumbers', itemstotal);
                 } else if (itemstotal === numCamera) {
-                    console.log("c'est le même nombre")
-                    itemstotal = cameraModifier
-                    localStorage.setItem('cartNumbers', itemstotal)
+                    console.log("c'est le même nombre");
+                    itemstotal = cameraModifier;
+                    localStorage.setItem('cartNumbers', itemstotal);
                 }
             } else if (parseInt(e.target.defaultValue) < parseInt(inputs[i].value)) {
-                console.log('+1')
+                console.log('+1');  // TEST
 
-                /*Prendre le nombre de camera l'ajouter au total d'objets dans le panier puis ajouter le nombre modifier.*/
-                /*Prendre le prix du produit et l'additionner au total */
+                // Ajouter le nombre de camera au total d'objets dans le panier puis ajouter le nombre modifié.
+                // Additionner le prix du produit au total du panier
 
-                let price = parseInt(localStorage.getItem('totalCost')) + parseInt(cartITems[id][0].price)
-                localStorage.setItem('totalCost', price)
-                let itemstotal = parseInt(localStorage.getItem('cartNumbers'))
-                let numCamera = parseInt(e.target.defaultValue)
-                let cameraModifier = cartITems[id][0].incart
+                let price = parseInt(localStorage.getItem('totalCost')) + parseInt(cartITems[id][0].price);
+                localStorage.setItem('totalCost', price);
+                let itemstotal = parseInt(localStorage.getItem('cartNumbers'));
+                let numCamera = parseInt(e.target.defaultValue);
+                let cameraModifier = cartITems[id][0].incart;
+
                 if (itemstotal > numCamera) {
-                    itemstotal = itemstotal + numCamera
-                    itemstotal = itemstotal + cameraModifier
-                    localStorage.setItem('cartNumbers', itemstotal)
+                    itemstotal = itemstotal + numCamera;
+                    itemstotal = itemstotal + cameraModifier;
+                    localStorage.setItem('cartNumbers', itemstotal);
                 } else if (itemstotal === numCamera) {
-                    console.log("c'est le même nombre")
-                    itemstotal = cameraModifier
-                    localStorage.setItem('cartNumbers', itemstotal)
+                    console.log("c'est le même nombre");
+                    itemstotal = cameraModifier;
+                    localStorage.setItem('cartNumbers', itemstotal);
                 }
             }
-            window.location.reload()
+            window.location.reload();
         });
     }
 }
 
 
 
+//Fonction affichage page order
 
-//Fonction confirmation commande prenant id comme parametre
-
-function ValidCart(inputs) {
-    let options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+function orders(id) {
+    let order = JSON.parse(localStorage.getItem('order'));
+    if (id == order.orderId) {
+        document.querySelector('.orderid').textContent = `Commande n° : ${order.orderId}`
+        let total = 0;
+        Object.values(order.products).map(items => {
+            document.querySelector('#products').innerHTML += `<tr>
+                                                                <th scope="row col-sm-3">${items._id}</th>
+                                                                <td>${items.name}</td>
+                                                                <td>${items.price / 100 + '€'}</td>
+                                                            </tr>`
+            total += items.price;
+        })
+        document.querySelector('.price').textContent = `Prix total : ${total / 100 + '€'}`;
+        document.querySelector('#thanks').textContent = `Merci ${order.contact.lastName} pour votre commande`;
     }
-    fetch("http://localhost:3000/api/cameras/order", options)
-        .then((response) => { response.json()
-        .then((data) => {
-            console.log(data);
-            localStorage.setItem('order', JSON.stringify(data));
-            document.location = 'order.html?order=' + data.orderId;
-        }
-        )}
-)}
+}
 
-//test requete POST
 
+
+function notfound() {
+    document.location = '404.html';
+}
 
 
 chargementPanierNumbers(); 
+
+

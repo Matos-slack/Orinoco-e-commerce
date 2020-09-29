@@ -46,4 +46,20 @@ i {
   background-color: #E9ECEF;
 }
 
+.orderid {
+  font-size: 1em;
+}
+
+input:invalid {
+  -webkit-box-shadow: 0px 0px 2px 4px rgba(255, 0, 0, 0.65);
+  -moz-box-shadow: 0px 0px 2px 4px rgba(255, 0, 0, 0.65);
+  box-shadow: 0px 0px 2px 4px rgba(255, 0, 0, 0.65);
+}
+
+input:valid {
+  -webkit-box-shadow: 0px 0px 2px 4px rgba(0, 255, 0, 0.25);
+  -moz-box-shadow: 0px 0px 2px 4px rgba(0, 255, 0, 0.25);
+  box-shadow: 0px 0px 2px 4px rgba(0, 255, 0, 0.25);
+}
+
 /*# sourceMappingURL=style.css.map */

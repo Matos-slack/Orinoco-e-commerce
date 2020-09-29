@@ -70,43 +70,39 @@
     <div class="container font-color">
 
         <div class="col-md-12">
-            <form class="">
+            <form class="needs-validation">
                 <p class="lead text-center font-weight-bold">Informations nécéssaire pour confirmer la commande</p>
                 <div class="form-row">
                     <div class="col-md-6">
                         <label for="lastname" class="font-weight-bold">Votre Nom</label>
-                        <input id="lastname" type="text" name="lastname" class="form-control mb-2" placeholder="Durand" required>
+                        <input name="lastname" type="text" minlength="2" maxlength="30" class="form-control mb-2" placeholder="Develop" pattern="[a-zA-Z\-]" required>
                     </div>
                     <div class="col-md-6">
                         <label for="name" class="font-weight-bold">Votre Prenom</label>
-                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                        <input name="name" type="text" minlength="2" maxlength="30" class="form-control mb-2" placeholder="Tom" pattern="[a-zA-Z\-]" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="name" class="font-weight-bold">Votre Adresse</label>
-                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                        <label for="email" class="font-weight-bold">Votre mail</label>
+                        <input name="email" type="email" class="form-control mb-2" placeholder="tom.develop@example.com" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="name" class="font-weight-bold">Votre Ville</label>
-                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                        <label for="adress" class="font-weight-bold">Votre Adresse</label>
+                        <input name="adress" type="text" class="form-control mb-2" placeholder="14 Chemin du Developpeur" pattern="[a-zA-Z0-9._-]" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="name" class="font-weight-bold">Votre mail</label>
-                        <input id="name" type="text" name="name" class="form-control mb-2" placeholder="Mathieu" required>
+                        <label for="city" class="font-weight-bold">Votre Ville</label>
+                        <input name="city" type="text" class="form-control mb-2" placeholder="New-York" pattern="[a-zA-Z\-]" required>
+                    </div>
+                    <div class="col-md-12 mt-4 mb-4">
+                        <div class="text-center">
+                            <p id="total" class="h3 font-weight-bold"></p>
+                            <button type="submit" class="btn btn-secondary buy mb-3 mt-2">Commander</button>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
-
-        <div class="col-md-12 mt-4 mb-4">
-            <div class="text-center">
-                <p id="total" class="h3 font-weight-bold"></p>
-                <button type="submit" class="btn btn-secondary mb-3 mt-2">Commander</button>
-            </div>
-        </div>
-
     </div>    
-
-
 
 
 
@@ -120,10 +116,7 @@
             
                         <h5 class="font-weight-bold text-uppercase mb-4">Footer Content</h5>
                         <p>Here you can use rows and columns to organize your footer content.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit amet numquam iure provident voluptate
-                            esse
-                            quasi, veritatis totam voluptas nostrum.
-                        </p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             
                     </div>
             
