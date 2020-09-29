@@ -70,33 +70,37 @@
     <div class="container font-color">
 
         <div class="col-md-12">
-            <form class="needs-validation">
+            <form class="text-left">
                 <p class="lead text-center font-weight-bold">Informations nécéssaire pour confirmer la commande</p>
                 <div class="form-row">
                     <div class="col-md-6">
                         <label for="lastname" class="font-weight-bold">Votre Nom</label>
-                        <input name="lastname" type="text" minlength="2" maxlength="30" class="form-control mb-2" placeholder="Develop" pattern="[a-zA-Z\-]" required>
+                        <input name="lastname" type="text" required minlength="2" maxlength="30" class="form-control mb-2" placeholder="Develop">
                     </div>
                     <div class="col-md-6">
                         <label for="name" class="font-weight-bold">Votre Prenom</label>
-                        <input name="name" type="text" minlength="2" maxlength="30" class="form-control mb-2" placeholder="Tom" pattern="[a-zA-Z\-]" required>
+                        <input name="name" type="text" required minlength="2" maxlength="30" class="form-control mb-2" placeholder="Tom">
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="font-weight-bold">Votre mail</label>
-                        <input name="email" type="email" class="form-control mb-2" placeholder="tom.develop@example.com" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" required>
+                        <input name="email" type="email" required class="form-control mb-2" placeholder="tom.develop@example.com">
                     </div>
                     <div class="col-md-6">
                         <label for="adress" class="font-weight-bold">Votre Adresse</label>
-                        <input name="adress" type="text" class="form-control mb-2" placeholder="14 Chemin du Developpeur" pattern="[a-zA-Z0-9._-]" required>
+                        <input name="adress" type="text" required class="form-control mb-2" placeholder="14 Chemin du Developpeur">
                     </div>
                     <div class="col-md-6">
                         <label for="city" class="font-weight-bold">Votre Ville</label>
-                        <input name="city" type="text" class="form-control mb-2" placeholder="New-York" pattern="[a-zA-Z\-]" required>
+                        <input name="city" type="text" required class="form-control mb-2" placeholder="New-York">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="postalcode" class="font-weight-bold">Votre code postal</label>
+                        <input name="postalcode" type="text" required class="form-control mb-2" placeholder="75000">
                     </div>
                     <div class="col-md-12 mt-4 mb-4">
                         <div class="text-center">
                             <p id="total" class="h3 font-weight-bold"></p>
-                            <button type="submit" class="btn btn-secondary buy mb-3 mt-2">Commander</button>
+                            <button class="btn btn-secondary buy mb-3 mt-2">Commander</button>
                         </div>
                     </div>
                 </div>

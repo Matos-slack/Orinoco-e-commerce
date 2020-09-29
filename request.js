@@ -2,10 +2,10 @@
 
 // Produits //
 let panier = document.querySelectorAll('.add');       //Selection bouton ajoutez au panier
-// document.querySelector('.cart').textContent = localStorage.getItem('cartNumbers');
-let params = new URLSearchParams(document.location.search.substring(1));
 let url = "http://localhost:3000/api/cameras";
 let item ={};
+let params = new URLSearchParams(document.location.search.substring(1));
+document.querySelector('#compteurPanier').textContent = localStorage.getItem('cartNumbers');
 
 
 //Switch Urls et appel fonction suivant l'url
@@ -30,7 +30,7 @@ switch (window.location.pathname) {
         afficherPanier();
         document.querySelector('.buy').addEventListener('click', e => {
             let inputs = document.querySelectorAll('input.form-control')
-            ValidForm(inputs)
+            ValidRegex(inputs)
         })
         break
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/order.html':
@@ -115,28 +115,31 @@ function produit(id) {
 
 
 
-function ValidForm(inputs) {
+function ValidRegex(inputs) {
     let data = {}
-    // let valid = 0
-    // let reg = {
-    //     "mail": /([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i, // Adresse Mail
-    //     "text": /^\S[a-z ,.'à-ÿ-]+$/i, // Nom, Prénom, Ville
-    //     "postal": /^[0-9]{1,5}[A-z0-9 'à-ÿ-]{5,30}$/i // Adresse postale
-    // }
-    // for (let i = 0; i < inputs.length; i++) {
-    //     if (inputs[i].name == "name" || inputs[i].name == "lastname" || inputs[i].name == "city") {
-    //         validClass(reg.text.test(inputs[i].value), inputs[i]);
-    //     } else if (inputs[i].name == "email") {
-    //         validClass(reg.mail.test(inputs[i].value), inputs[i]);
-    //     } else if (inputs[i].name == "adress") {
-    //         validClass(reg.postal.test(inputs[i].value), inputs[i]);
-    //     }
-    //     if (inputs[i].classList[1] == 'is-valid') {
-    //         valid = i
-    //     }
-        // if (valid == 4) {
-            // document.querySelector('form').submit()
-            let pducts = JSON.parse(localStorage.getItem('itemsInCart'));
+    let valid = 0
+    let reg = {
+        "mail": /([\w-\.]+@[\w-\.]+\.{1}[\w]+)/i, // Adresse Mail
+        "text": /^\S[a-z ,.'à-ÿ-]+$/i, // Nom, Prénom, Ville
+        "postalcode": /^[0-9]{5}$/i, // Code postal
+        "postal": /^[0-9]{1,5}[A-z0-9 'à-ÿ-]{5,30}$/i // Adresse postale
+    }
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].name == "name" || inputs[i].name == "lastname" || inputs[i].name == "city") {
+            formV(reg.text.test(inputs[i].value), inputs[i])
+        } else if (inputs[i].name == "email") {
+            formV(reg.mail.test(inputs[i].value), inputs[i])
+        } else if (inputs[i].name == "adress") {
+            formV(reg.postal.test(inputs[i].value), inputs[i])
+        } else if (inputs[i].name == "postalcode") {
+            formV(reg.postalcode.test(inputs[i].value), inputs[i])
+        }
+        if (inputs[i].classList[1] == 'is-valid') {
+            valid = i
+        }
+        if (valid = 5) {
+            document.querySelector('form').submit()
+            let pducts = JSON.parse(localStorage.getItem('itemsInCart'))
             data = {
                 'contact': {
                     'firstName': inputs[0].value,
@@ -152,19 +155,19 @@ function ValidForm(inputs) {
             Object.keys(pducts).map(pdt => {
                 for (let i = 0; i < pducts[pdt].length; i++) {
                     const e = pducts[pdt][i];
-                    if (e.incart >= 1) {
+                    if (e.incart > 1) {
                         for (let x = 0; x < e.incart; x++) {
-                            console.log(e);
-                            data.products.push(e.id);
+                            console.log(e)
+                            data.products.push(e.id)
                         }
                     } else {
-                        data.products.push(e.id);
+                        data.products.push(e.id)
                     }
                 }
             })
-            console.log(data);  // TEST
+            console.log(data)
             // Ici le post et localstorage
-            let posturl = "http://localhost:3000/api/cameras/order";
+            let posturl = "http://localhost:3000/api/cameras/order"
             const options = {
                 method: 'POST',
                 headers: {
@@ -176,20 +179,26 @@ function ValidForm(inputs) {
 
                 response.json().then((data) => {
                     console.log(data);
-                    localStorage.setItem('order', JSON.stringify(data));
-                    localStorage.removeItem('cartNumbers');
-                    localStorage.removeItem('totalCost');
-                    localStorage.removeItem('itemsInCart');
-                    document.location = 'order.html?order=' + data.orderId;
+                    localStorage.setItem('order', JSON.stringify(data))
+                    localStorage.removeItem('cartNumbers')
+                    localStorage.removeItem('totalCost')
+                    localStorage.removeItem('itemsInCart')
+                    document.location = 'order.html?order=' + data.orderId
                 });
             })
         }
+    }
+
+}
     
 
-    
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
 
 // Fonction ajout ou suppression validation formulaire
-function validClass(Regtest, input) {
+function formV(Regtest, input) {
     if (Regtest) {
         input.classList.remove("is-invalid");
         input.classList.add("is-valid");
@@ -201,14 +210,14 @@ function validClass(Regtest, input) {
 
 
 
-function chargementPanierNumbers() {                                // Fonction pour garder cartNum même en rafraichissant la page
-    let cartNumbers = localStorage.getItem('cartNumbers');
-    if (cartNumbers) {
-        document.querySelector('#compteurPanier').textContent = cartNumbers;
-    } else {
-        document.querySelector('#compteurPanier').textContent = 0;
-    }
-}
+// function chargementPanierNumbers() {                                // Fonction pour garder cartNum même en rafraichissant la page
+//     let cartNumbers = localStorage.getItem('cartNumbers');
+//     if (cartNumbers) {
+//         document.querySelector('#compteurPanier').textContent = cartNumbers;
+//     } else {
+//         document.querySelector('#compteurPanier').textContent = 0;
+//     }
+// }
 
 
 
@@ -456,6 +465,6 @@ function notfound() {
 }
 
 
-chargementPanierNumbers(); 
+// chargementPanierNumbers(); 
 
 
