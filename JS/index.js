@@ -1,3 +1,4 @@
+
 // Produits //
 let panier = document.querySelectorAll('.add');       //Selection bouton ajoutez au panier
 let url = "http://localhost:3000/api/cameras";

@@ -46,31 +46,6 @@ for (let i = 0; i < panier.length; i++) {
     })
 }
 
-
-// Fonction nombre item dans le panier
-function cartNum() {
-    let num = parseInt(localStorage.getItem('cartNumbers'));
-    if (num) {
-        localStorage.setItem('cartNumbers', num + 1);
-        document.querySelector('#compteurPanier').textContent = num + 1;
-    } else {
-        localStorage.setItem('cartNumbers', 1);
-        document.querySelector('#compteurPanier').textContent = 1;
-    }
-}
-
-//Fonction pour faire total item dans panier
-function total() {
-    let product = updateproduct();
-    let cartCost = localStorage.getItem('totalCost');
-    if (cartCost != null) {
-        cartCost = parseInt(cartCost);
-        localStorage.setItem('totalCost', cartCost + product[0].price);
-    } else {
-        localStorage.setItem('totalCost', product[0].price);
-    }
-}
-
 function notfound() {
     document.location = '404.html';
 }
