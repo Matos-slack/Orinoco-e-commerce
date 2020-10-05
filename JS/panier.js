@@ -167,7 +167,7 @@ function afficherPanier() {
 
     let productsInCart = document.querySelector('.cart.additem');
     document.querySelector('#total').textContent = `Total : ${localStorage.getItem('totalCost')}€`;
-    console.log(cartITems);                                                     // Verification produit présent dans le panier TEST
+    console.log(cartITems);            // Verification produit présent dans le panier TEST
 
     if (cartITems && productsInCart) {
         productsInCart.innerHTML = '';

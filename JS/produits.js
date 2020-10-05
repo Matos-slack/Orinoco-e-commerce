@@ -64,13 +64,13 @@ function updateproduct() {
 // Fonction ajout item dans localstorage et panier en fonction de son id
 
 function itemPanier() {
-    if (localStorage.getItem('itemsInCart') != null) {                      // 1) Si item dans panier sont # de null
+    if (localStorage.getItem('itemsInCart') != null) {                      // Si item dans panier sont # de null
  
-        let inCart = JSON.parse(localStorage.getItem('itemsInCart'));       // 2) Récuperer les items dans un tableau
+        let inCart = JSON.parse(localStorage.getItem('itemsInCart'));       // Récuperer les items dans un tableau
 
         let product = updateproduct();
         total();
-        console.log(product);
+        console.log(product);                                              // Affiche les infos du produits cliqué
 
         let ids = Object.keys(inCart);                                      // Retourne un tableau des noms de proprietes de l'objet inCart
         if (ids.indexOf(product[0].id) != -1) {                             // Si l'id est déjà dans le panier 

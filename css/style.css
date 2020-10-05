@@ -4,6 +4,7 @@
 }
 body {
   font-family: "RobotoMono", Arial, Helvetica, sans-serif;
+  padding-top: 120px;
 }
 
 .item-nav {
@@ -48,6 +49,10 @@ i {
 
 .orderid {
   font-size: 1em;
+}
+
+.color {
+  background-color: #f8f9fa;
 }
 
 /*# sourceMappingURL=style.css.map */
