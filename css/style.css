@@ -55,4 +55,60 @@ i {
   background-color: #f8f9fa;
 }
 
+.buy {
+  font-size: 2em;
+}
+
+button.buy:hover {
+  animation: turn 800ms linear 50ms;
+}
+
+.icons {
+  font-size: 2em;
+}
+
+@keyframes wiggle {
+  0% {
+    -webkit-transform: translate(3px, 2px) rotate(0deg);
+  }
+  10% {
+    -webkit-transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    -webkit-transform: translate(-4px, 1px) rotate(1deg);
+  }
+  30% {
+    -webkit-transform: translate(1px, 3px) rotate(0deg);
+  }
+  40% {
+    -webkit-transform: translate(2px, -2px) rotate(1deg);
+  }
+  50% {
+    -webkit-transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  60% {
+    -webkit-transform: translate(-4px, 2px) rotate(0deg);
+  }
+  70% {
+    -webkit-transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    -webkit-transform: translate(-2px, -3px) rotate(1deg);
+  }
+  90% {
+    -webkit-transform: translate(2px, 2px) rotate(0deg);
+  }
+  100% {
+    -webkit-transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+@keyframes turn {
+  0% {
+    -webkit-transform: rotatex(0deg);
+  }
+  100% {
+    -webkit-transform: rotatex(360deg);
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

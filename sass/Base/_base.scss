@@ -41,6 +41,15 @@ i {
 .color{
     background-color: #f8f9fa;
 }
+.buy{
+    font-size: 2em;
+}
+button.buy:hover{
+    animation: turn 800ms linear 50ms;
+}
+.icons{
+    font-size: 2em;
+}
 
 
 

@@ -1,185 +1,180 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/84fc54ad83.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="./css/style.css">
-        <title>Commande</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="./css/style.css">
+            <title>Commande</title>
+    </head>
+    <body>
 
-    <header>
-        <div class="bg-light">
-            <div class="container">
-                <div class="row">
-                    <nav class="col navbar navbar-expand-lg navbar-light fixed-top color">
+        <header>
+            <div class="bg-light">
+                <div class="container">
+                    <div class="row">
+                        <nav class="col-12 navbar navbar-expand-lg navbar-light fixed-top color border-bottom">
 
-                        <a class="navbar-brand navbar-collapse" href="index.html">
-                            <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">OriCamera</span>
-                        </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div id="navbarContent" class="collapse navbar-collapse">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item active">
-                                        <a class="nav-link mx-3" href="index.html"><span class="item-nav">Accueil</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link mx-3" href="#nosProduit"><span class="item-nav">Produits</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link mx-3" href="#"><span class="item-nav">Blog</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link mx-3" href="#"><span class="item-nav">Albums</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="navbar-nav mx-auto">
-                                <a class="nav-link" href="panier.html"><span class="item-nav">Panier</span>
-                                <i class="fas fa-shopping-cart my-auto"></i><span id="compteurPanier" class="ml-1">0</span></a>
-                            </div>
-                    </nav>
+                            <a class="navbar-brand navbar-collapse ml-1" href="index.html">
+                                <img src="./images/image1.png" alt="Logo du Site, souris blanche" height="100"> <span class="marque">OriCamera</span>
+                            </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div id="navbarContent" class="collapse navbar-collapse">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item active">
+                                            <a class="nav-link mx-3" href="index.html"><span class="item-nav">Accueil</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mx-3" href="#nosProduit"><span class="item-nav">Produits</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mx-3" href="#"><span class="item-nav">Blog</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mx-3" href="#"><span class="item-nav">Albums</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="navbar-nav mx-auto">
+                                    <a class="nav-link" href="panier.html"><span class="item-nav">Panier</span>
+                                    <img src="./images/4105931.png" alt="icon Caddy"><span id="compteurPanier" class="ml-1">0</span></a>
+                                </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto border border-secondary my-5">
-                <h1 id="thanks" class="h2 text-center my-3"></h1>
-                <h2 class="orderid text-center my-3"></h2>
-
-                <div class="table-responsive-md">
-                    <table class="table table-bordered my-5">
-                        <thead class="thead-dark">
-                            <tr class="bg-secondary">
-                                <th scope="col">Rèf Produit</th>
-                                <th scope="col">Produit</th>
-                                <th scope="col">Prix</th>
-                            </tr>
-                        </thead>
-                        <tbody id="products">
-                        
-                        </tbody>
-                    </table>
-                </div>
-
-                <h2 class="price h3 text-center"></h2>
-            </div>          
-        </div>      
-    </div>
-    
-
-    <!-- Footer -->
-    <footer class="page-footer font-small mdb-color lighten-3 pt-4 bg-dark text-light">
-
-        <div class="container text-center text-md-left ">
+        <div class="container">
             <div class="row">
-                <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
-        
-                    <h5 class="font-weight-bold text-uppercase mb-4">Footer Content</h5>
-                    <p>Here you can use rows and columns to organize your footer content.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        
-                </div>
-        
-                <hr class="clearfix w-100 d-md-none">
+                <div class="col-md-8 mx-auto border border-secondary my-5">
+                    <h1 id="thanks" class="h2 text-center my-3"></h1>
+                    <h2 class="orderid text-center my-3"></h2>
 
-                <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
-                    <h5 class="font-weight-bold text-uppercase mb-4">A Propos</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <p>
-                                <a href="#!">Cameras</a>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <a href="#!">A propos de Orinoco</a>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <a href="#!">BLOG</a>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <a href="#!">Contactez Nous</a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+                    <div class="table-responsive-md">
+                        <table class="table table-bordered my-5">
+                            <thead class="thead-dark">
+                                <tr class="bg-secondary">
+                                    <th scope="col">Rèf Produit</th>
+                                    <th scope="col">Produit</th>
+                                    <th scope="col">Prix</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="price h3 text-center"></h2>
+                </div>          
+            </div>      
+        </div>
         
-                <hr class="clearfix w-100 d-md-none">
-        
-                <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
-                    <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+
+        <!-- Footer -->
+        <footer class="page-footer font-small mdb-color lighten-3 pt-4 bg-dark text-light">
+
+            <div class="container text-center text-md-left ">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
             
-                    <ul class="list-unstyled">
+                        <h5 class="font-weight-bold text-uppercase mb-4">Footer Content</h5>
+                        <p>Here you can use rows and columns to organize your footer content.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            
+                    </div>
+            
+                    <hr class="clearfix w-100 d-md-none">
+
+                    <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+                        <h5 class="font-weight-bold text-uppercase mb-4">A Propos</h5>
+                        <ul class="list-unstyled">
                             <li>
                                 <p>
-                                    <i class="fas fa-home mr-3"></i> Grenoble, 38000 France
+                                    <a href="#!">Cameras</a>
                                 </p>
                             </li>
                             <li>
                                 <p>
-                                    <i class="fas fa-envelope mr-3"></i> orinco@mail.com
+                                    <a href="#!">A propos de Orinoco</a>
                                 </p>
                             </li>
                             <li>
                                 <p>
-                                    <i class="fas fa-phone mr-3"></i> +33 476 270 025
+                                    <a href="#!">BLOG</a>
                                 </p>
                             </li>
-                    </ul>
-                </div>
-        
-                <hr class="clearfix w-100 d-md-none">
-        
-                <div class="col-md-2 col-lg-2 text-center mx-auto">
-                    <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
-                    <!-- Facebook -->
-                    <a type="button" class="btn-floating btn-fb">
-                        <i class="fab fa-facebook fa-4x mx-1 my-2"></i>
-                    </a>
-                    <!-- Twitter -->
-                    <a type="button" class="btn-floating btn-tw">
-                        <i class="fab fa-twitter fa-4x mx-1 my-2"></i>
-                    </a>
-                    <!-- Google +-->
-                    <a type="button" class="btn-floating btn-gplus">
-                        <i class="fab fa-google fa-4x mx-1 my-2"></i>
-                    </a>
-                    <!-- Dribbble -->
-                    <a type="button" class="btn-floating btn-dribbble">
-                        <i class="fab fa-dribbble fa-4x mx-1 my-2"></i>
-                    </a>
+                            <li>
+                                <p>
+                                    <a href="#!">Contactez Nous</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+            
+                    <hr class="clearfix w-100 d-md-none">
+            
+                    <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+                        <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+                
+                        <ul class="list-unstyled">
+                                <li>
+                                    <p>
+                                        <i class="fas fa-home mr-3"></i> Grenoble, 38000 France
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fas fa-envelope mr-3"></i> orinco@mail.com
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fas fa-phone mr-3"></i> +33 476 270 025
+                                    </p>
+                                </li>
+                        </ul>
+                    </div>
+            
+                    <hr class="clearfix w-100 d-md-none">
+            
+                    <div class="col-md-2 col-lg-2 text-center mx-auto">
+                        <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
+                        <!-- Facebook -->
+                        <a type="button" class="btn-floating btn-fb">
+                            <i class="fab fa-facebook fa-4x mx-1 my-2"></i>
+                        </a>
+                        <!-- Twitter -->
+                        <a type="button" class="btn-floating btn-tw">
+                            <i class="fab fa-twitter fa-4x mx-1 my-2"></i>
+                        </a>
+                        <!-- Google +-->
+                        <a type="button" class="btn-floating btn-gplus">
+                            <i class="fab fa-google fa-4x mx-1 my-2"></i>
+                        </a>
+                        <!-- Dribbble -->
+                        <a type="button" class="btn-floating btn-dribbble">
+                            <i class="fab fa-dribbble fa-4x mx-1 my-2"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 bg-light text-dark">© 2020 Copyright : Orinoco Company</div>
-        <!-- Copyright -->
-    
-    </footer>
-
-
-
-
-        <script src="./JS/order.js"></script>
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 bg-light text-dark">© 2020 Copyright : Orinoco Company</div>
+            <!-- Copyright -->
+        
+        </footer>
+        <script src="./JS/request.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha512-kBFfSXuTKZcABVouRYGnUo35KKa1FBrYgwG4PAx7Z2Heroknm0ca2Fm2TosdrrI356EDHMW383S3ISrwKcVPUw==" crossorigin="anonymous"></script>
 
-</body>
+    </body>
 </html>

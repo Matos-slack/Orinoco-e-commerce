@@ -12,3 +12,7 @@
 100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
 }
 
+@keyframes turn {
+    0% { -webkit-transform: rotatex(0deg);}
+    100% { -webkit-transform: rotatex(360deg);}
+}
