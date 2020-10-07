@@ -19,7 +19,7 @@ console.log(window.location.pathname);
     case '/produits.html':
         let id = params.get("id");
         console.log('Produit, id : ' + id);
-        id ? produit(id) : notfound();
+        produit(id);
         break
     case '/C:/Users/tosma/Desktop/Orinoco/JWDP5/panier.html':
     case '/panier.html':
@@ -34,15 +34,15 @@ console.log(window.location.pathname);
     case '/order.html':
         let order = params.get("order");
         console.log('Commande n° : ' + order);
-        order ? orders(order) : notfound();
+        orders(order);
 }
 
 
 for (let i = 0; i < panier.length; i++) {
-    panier[i].addEventListener('click', function (e) {                //Evenement au clic sur bouton panier
+    panier[i].addEventListener('click', function (e) {                  //Evenement au clic sur bouton panier
         e.preventDefault();
-        cartNum();                                                  // Appel fonction pour nbr article
-    itemPanier();                                                   // Appel fonction pour ajouter un item au panier
+        cartNum();                                                      // Appel fonction pour nbr article
+        itemPanier();                                                   // Appel fonction pour ajouter un item au panier
     })
 }
 
@@ -135,7 +135,6 @@ function addItem(id, product, json) {
     }
     return item;
 }
-
 
 //Récupération id des produits API, pour envoyer infos sur page produits.html?id
 function produit(id) {
@@ -407,7 +406,6 @@ function afficherPanier() {
     }
 }
 
-
 //Fonction affichage page order
 function orders(id) {
     let order = JSON.parse(localStorage.getItem('order'));
@@ -427,10 +425,6 @@ function orders(id) {
     }
 }
 
-
-function notfound() {
-    document.location = '404.html';
-}
 
 
 
