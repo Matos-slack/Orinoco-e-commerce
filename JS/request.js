@@ -402,7 +402,7 @@ function afficherPanier() {
                 cartNum()
 
             }
-            window.location.reload()
+            window.location.reload()   //Rechargement page pour compteur panier
         });
     }
 }
